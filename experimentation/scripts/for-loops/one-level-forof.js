@@ -1,5 +1,5 @@
-function main() {
-    const left   = new Array(1_000_000).fill(0);
+function main(length) {
+    const left   = new Array(length).fill(0);
     forof(left);
 }
  

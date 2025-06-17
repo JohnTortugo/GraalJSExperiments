@@ -12,7 +12,7 @@ import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Engine;
 import org.graalvm.polyglot.Value;
 
-public class App {
+public class SimpleJSExecution {
 	private static String codeFilePath;
 	private static Boolean doWarmup;
 	private static final DecimalFormat formatter = new DecimalFormat("#,###");
@@ -63,7 +63,7 @@ public class App {
 	
 	private static void exec(long execId, Value test, long from, long to, boolean print) {
 		long start = 0, end = 0, acc = 0;
-		long len = (to - from) + 1; // +1 because both ends are inclusive
+		long length = (to - from) + 1; // +1 because both ends are inclusive
 	
 	    try {
             System.out.println("\n\nProceed with executions " + from + " to " + to + "?\n");
@@ -74,16 +74,13 @@ public class App {
 			System.out.print("Execution " + execId + ") Iterations [" + String.format("%5d", from) + "," + String.format("%5d", to) + "] average duration: ");	
 		}
 		
-		while (from <= to) {
-			start = System.nanoTime();
-			test.execute(len);
-			end = System.nanoTime();
-			acc = acc + (end-start);
-			from++;
-		}
+		start = System.nanoTime();
+		test.execute(length);
+		end = System.nanoTime();
+		acc = acc + (end-start);
 
 		if (print) {
-			System.out.println(formatter.format((acc / len) / 1_000) + " us");	
+			System.out.println(formatter.format((acc / length) / 1_000) + " us");	
 		}
 	}
 	

@@ -1,5 +1,13 @@
 graal-ws
 /experimentation/target
 /experimentation/.mvn
+/experimentation/.idea
+**/.settings
+.prefs
 .class
+.settings/
 .jar
+.DS_Store
+dumps/
+graal_dumps
+debug.log
