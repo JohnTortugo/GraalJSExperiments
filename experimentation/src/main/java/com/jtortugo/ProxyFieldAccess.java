@@ -19,7 +19,7 @@ import org.graalvm.polyglot.proxy.ProxyObject;
 
 public class ProxyFieldAccess {
     private static final int ORDER_SIZE = 1000;
-    private static final int BENCH_ITERATIONS = 11100;
+    private static final int BENCH_ITERATIONS = 15100;
 
     public static class Order {
         public HashMap<String, Object> fields;
@@ -436,15 +436,172 @@ public class ProxyFieldAccess {
     }   
     
     
+ 
+
+    
+    
+    
+    
+   
+    
+    
+    
+	public static class DirectField {
+        public Integer quantity = 0;
+
+        public DirectField(int quantity) {
+        	this.quantity = quantity;
+        }
+    }
+
+    private static DirectField directFieldAccessInput(final long seed) {
+        return new DirectField (4975);
+    }
+
+    public static void directFieldAccess() {
+    	final int measurementSize = 50;
+    	final long[] times = new long[measurementSize];
+    	final Double[] results = new Double[measurementSize];
+    	
+        final String content = """
+            (
+        		function single_field_direct(order) {
+        			return 3.1415 * order.quantity;
+				}
+            )
+            """;
+
+        final Engine engine = Engine.newBuilder("js")
+                .allowExperimentalOptions(true)
+                .option("engine.DynamicCompilationThresholds", "false")
+                .option("engine.BackgroundCompilation",        "false")
+                .option("engine.TraceCompilation",             "false")
+                .option("engine.TraceCompilationDetails",      "false")
+                .option("compiler.TraceInlining",              "false")
+                .option("engine.OSR", 						   "false")
+                //.option("compiler.InlineOnly",               "~single_field_direct")
+                .build();
+
+        var source = Source.newBuilder("js", content, "single_field_direct.js").buildLiteral();
+
+        try (var context = Context.newBuilder("js").engine(engine).allowAllAccess(true).build()) {
+            var function = context.eval(source);
+
+            for (int i = 0; i < BENCH_ITERATIONS; i++) {
+                var order = directFieldAccessInput(i);
+                var start = System.nanoTime();
+                var result = function.execute((Object) order).asDouble();
+                var end = System.nanoTime();
+                
+                if (i >= (BENCH_ITERATIONS - measurementSize)) {
+                	times[measurementSize - (BENCH_ITERATIONS - i)] = (end - start);
+                	results[measurementSize - (BENCH_ITERATIONS - i)] = result;
+                }
+            }
+        }
+        
+        for (int i = 0; i < measurementSize; i++) {
+			System.out.printf("DirectFieldAccess [%d -> %f] took %d ns%n", i, results[i], times[i]);
+        }
+    }
+    
+    
+    
     
     
     
 
-    public static void main(String[] args) throws IOException {
-        proxyAccess();
-        directAccess();
-        proxyMapAccess();
+	public static class SingleFieldProxy implements ProxyObject {
+        Integer quantity = 0;
+
+        public SingleFieldProxy(int quantity) {
+        	this.quantity = quantity;
+        }
+
+        @Override
+        public Object getMember(final String key) {
+			return quantity;
+        }
+
+        @Override
+        public Object getMemberKeys() {
+            return new String[] {"quantity"};
+        }
+
+        @Override
+        public boolean hasMember(final String key) {
+            return key.equals("quantity");
+        }
+
+        @Override
+        public void putMember(final String key, final Value value) {
+            throw new UnsupportedOperationException("SingleFieldProxy is immutable");
+        }
+    }
+
+    private static SingleFieldProxy singleFieldProxyAccessInput(final long seed) {
+        return new SingleFieldProxy(4975);
+    }
+
+	static final int measurementSize = 50;
+	static final long[] times = new long[measurementSize];
+	static final Double[] results = new Double[measurementSize];
+
+    public static void singleFieldProxyAccess() throws Exception {
+        final String content = """
+            (
+        		function single_field_proxy(order) {
+        			return 3.1415 * order.quantity;
+				}
+            )
+            """;
+
+        final Engine engine = Engine.newBuilder("js")
+                .allowExperimentalOptions(true)
+                .option("engine.DynamicCompilationThresholds", "false")
+                .option("engine.BackgroundCompilation",        "false")
+                .option("engine.TraceCompilation",             "false")
+                .option("engine.TraceCompilationDetails",      "false")
+                .option("compiler.TraceInlining",              "false")
+                .option("engine.OSR", 						   "false")
+                .build();
+
+        var source = Source.newBuilder("js", content, "single_field_proxy.js").buildLiteral();
+
+        try (var context = Context.newBuilder("js").engine(engine).allowAllAccess(true).build()) {
+            var function = context.eval(source);
+
+            for (int i = 0; i < BENCH_ITERATIONS; i++) {
+                var order = singleFieldProxyAccessInput(i);
+                var start = System.nanoTime();
+                var result = function.execute((Object) order).asDouble();
+                var end = System.nanoTime();
+                if (i >= (BENCH_ITERATIONS - measurementSize)) {
+                	times[measurementSize - (BENCH_ITERATIONS - i)] = (end - start);
+                	results[measurementSize - (BENCH_ITERATIONS - i)] = result;
+                }
+            }
+        }
+        
+        for (int i = 0; i < measurementSize; i++) {
+			System.out.printf("SingleFieldProxyAccess [%d -> %f] took %d ns%n", i, results[i], times[i]);
+        }
+     
+    }
+    
+    
+
+    public static void main(String[] args) throws Exception {
+        //proxyAccess();
+        //directAccess();
+        //proxyMapAccess();
         //proxyCustomMapAccess();
-        extendedHashMapAccess();
+        //extendedHashMapAccess();
+
+    	//System.out.println("-----------------------------------------");
+    	//directFieldAccess();
+
+    	System.out.println("-----------------------------------------");
+    	singleFieldProxyAccess();
     }
 }
