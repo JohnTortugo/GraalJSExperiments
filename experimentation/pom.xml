@@ -38,12 +38,22 @@
         <artifactId>polyglot</artifactId>
         <version>${graaljs.version}</version>
     </dependency>
+	<dependency>
+	    <groupId>org.graalvm.truffle</groupId>
+	    <artifactId>truffle-dsl-processor</artifactId>
+	    <version>${graaljs.version}</version>
+	</dependency>
     <dependency>
         <groupId>org.graalvm.polyglot</groupId>
         <artifactId>js</artifactId>
         <version>${graaljs.version}</version>
         <type>pom</type>
     </dependency>
+    <dependency>
+    	<groupId>org.graalvm.truffle</groupId>
+    	<artifactId>truffle-api</artifactId>
+    	<version>24.1.0</version>
+	</dependency>
     <dependency>
       <groupId>org.graalvm.compiler</groupId>
       <artifactId>compiler</artifactId>
@@ -96,6 +106,13 @@
             <version>3.13.0</version>
             <configuration>
                 <fork>true</fork>
+                <annotationProcessorPaths>
+                <path>
+                    <groupId>org.graalvm.truffle</groupId>
+                        <artifactId>truffle-dsl-processor</artifactId>
+                        <version>${graalvm.version}</version>
+                    </path>
+                </annotationProcessorPaths>
             </configuration>
         </plugin>
         <plugin>
