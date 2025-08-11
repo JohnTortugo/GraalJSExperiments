@@ -24,7 +24,7 @@ public class MapAccess_FourFields_ProxyObject implements ProxyObject {
 
         @Override
         public void putMember(final String key, final Value value) {
-            throw new UnsupportedOperationException("SingleFieldProxy is immutable");
+        	this.fields.put(key, value.asInt());
         }
 
 		@Override

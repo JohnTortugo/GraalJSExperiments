@@ -3,6 +3,7 @@ package com.jtortugo.proxies;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.interop.InteropLibrary;
 import com.oracle.truffle.api.interop.TruffleObject;
@@ -13,6 +14,7 @@ import com.oracle.truffle.api.library.ExportMessage;
 
 @ExportLibrary(InteropLibrary.class)
 public class MapAccess_FourFields_CustomProxy implements TruffleObject {
+	@CompilationFinal
     private final Map<String, Object> fields;
 
     public MapAccess_FourFields_CustomProxy(int field1, int field2, int field3, int field4) {

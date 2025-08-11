@@ -22,7 +22,7 @@ ${JAVA_PATH}/java                                                               
     -server                                                                             \
     -XX:+EnableJVMCI                                                                    \
     ${JVM_DEBUG_}                                                                       \
-    ${JAVA_DEBUG}                                                                      \
+    ${JAVA_DEBUG_}                                                                      \
     ${IGV_DUMP_}                                                                        \
     --add-exports=java.base/jdk.internal.misc=jdk.graal.compiler                        \
     -Dgraalvm.locatorDisabled=true                                                      \
@@ -31,5 +31,5 @@ ${JAVA_PATH}/java                                                               
     --enable-native-access=org.graalvm.truffle                                          \
     --sun-misc-unsafe-memory-access=allow                                               \
     -cp ${EXPERIMENTATION_JAR_PATH}                                                     \
-    com.jtortugo.proxies.ProxyFieldAccess
+    com.jtortugo.proxies.TruffleObjectProxied
 

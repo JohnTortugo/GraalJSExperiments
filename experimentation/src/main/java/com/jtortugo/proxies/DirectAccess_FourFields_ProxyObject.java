@@ -42,6 +42,11 @@ public class DirectAccess_FourFields_ProxyObject implements ProxyObject {
     
     @Override
     public void putMember(final String key, final Value value) {
-        throw new UnsupportedOperationException("SingleFieldProxy is immutable");
+    	switch (key) {
+			case "field1": field1 = value.asInt();
+			case "field2": field2 = value.asInt();
+			case "field3": field3 = value.asInt();
+			case "field4": field4 = value.asInt();
+    	}
     }
 }
