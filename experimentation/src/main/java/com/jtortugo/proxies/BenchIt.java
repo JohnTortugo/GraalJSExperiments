@@ -8,18 +8,18 @@ import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
 import com.oracle.truffle.api.interop.TruffleObject;
 
-class BenchIt {
-    public static void computeStats(String label, long[] data, int N) {
-        if (data == null || data.length == 0 || N <= 1 || N > data.length) {
+public class BenchIt {
+    public static void computeStats(String label, long[] data, int sampleSize) {
+        if (data == null || data.length == 0 || sampleSize <= 1 || sampleSize > data.length) {
             throw new IllegalArgumentException("Invalid input or N too large/small");
         }
 
-        int startIndex = data.length - N;
+        int startIndex = data.length - sampleSize;
         double sum = 0.0;
         for (int i = startIndex; i < data.length; i++) {
             sum += data[i];
         }
-        double average = sum / N;
+        double average = sum / sampleSize;
 
         double varianceSum = 0.0;
         for (int i = startIndex; i < data.length; i++) {
@@ -27,8 +27,8 @@ class BenchIt {
             varianceSum += diff * diff;
         }
 
-        double standardDeviation = Math.sqrt(varianceSum / (N - 1)); // sample stdev
-        double standardError = standardDeviation / Math.sqrt(N);
+        double standardDeviation = Math.sqrt(varianceSum / (sampleSize - 1)); // sample stdev
+        double standardError = standardDeviation / Math.sqrt(sampleSize);
 
         double zScore = 1.96; // for 95% confidence
         double confidenceLow = average - zScore * standardError;
@@ -40,16 +40,19 @@ class BenchIt {
         System.out.printf("\t\t95%% Confidence Interval...........: [%.2f, %.2f] us%n", confidenceLow, confidenceHigh);
     }
     
-	public static Double benchIt(String expName, String jsSource, String proxyConfigName, Function<Integer, Object> gen) {
-        final int BENCH_ITERATIONS = 20100;
+	public static double benchIt(String expName, String jsSource, String proxyConfigName, Function<Integer, Object> gen) {
+        final int BENCH_ITERATIONS = 10000;
     	long[] times = new long[BENCH_ITERATIONS];
-    	Double[] results = new Double[BENCH_ITERATIONS];
+    	double[] results = new double[BENCH_ITERATIONS];
 
     	final Engine engine = Engine.newBuilder("js")
                 .allowExperimentalOptions(true)
                 .option("engine.DynamicCompilationThresholds", "false")
                 .option("engine.BackgroundCompilation",        "false")
                 .option("engine.OSR", 						   "false")
+                .option("engine.TraceCompilationDetails",      "true")
+                .option("engine.TraceTransferToInterpreter",      "true")
+                .option("engine.TraceAssumptions",      "true")
                 .build();
 
         var source = Source.newBuilder("js", jsSource, expName + "_" + proxyConfigName + ".js").buildLiteral();
@@ -60,34 +63,15 @@ class BenchIt {
             for (int i = 0; i < BENCH_ITERATIONS; i++) {
                 var order = gen.apply(i);
                 var start = System.nanoTime();
-                Value val = function.execute(order, 100_000);
-
-                if (val.isNumber()) {
-                    results[i] = function.execute(order, 100_000).asDouble();
-                } else {
-                    try {
-                        MapAccess_OneField_CustomProxy proxy = val.as(MapAccess_OneField_CustomProxy.class);
-                        System.out.println("Terms: " + proxy.readMember("term"));
-                        System.out.println("Annotations_AsField: ");
-                        for (String a : (String[]) (proxy.readMember("annotations"))) {
-                            System.out.println("\t" + a);
-                        }
-                        System.out.println("Annotations_AsMethod: ");
-                        for (String a : proxy.getAnnotations()) {
-                            System.out.println("\t" + a);
-                        }
-                    } catch (ClassCastException e) {
-                        e.printStackTrace();
-                    }
-                }
+                Value vlw = function.execute(order, 10_000);
 				times[i] = (System.nanoTime() - start) / 1_000;
-                
+				results[i] = vlw.asDouble();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        computeStats(proxyConfigName, times, 10_000);
+        computeStats(proxyConfigName, times, BENCH_ITERATIONS > 1000 ? 1000 : BENCH_ITERATIONS);
         return results[BENCH_ITERATIONS-1];
     }
 }

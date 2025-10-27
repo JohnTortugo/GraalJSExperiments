@@ -16,20 +16,22 @@ mvn clean package
 popd
 
 # Run it
-${JAVA_PATH}/java                                                                       \
+#${JAVA_PATH}/
+
+~/wf/tools/jdk-20.0.2+9/Contents/Home/bin/java                                                                       \
     -XX:+UnlockExperimentalVMOptions                                                    \
     -XX:+UnlockDiagnosticVMOptions                                                      \
+    -ea                                                                                 \
+    -esa                                                                                \
     -server                                                                             \
     -XX:+EnableJVMCI                                                                    \
     ${JVM_DEBUG_}                                                                       \
-    ${JAVA_DEBUG_}                                                                      \
+    ${JAVA_DEBUG}                                                                       \
     ${IGV_DUMP_}                                                                        \
-    --add-exports=java.base/jdk.internal.misc=jdk.graal.compiler                        \
-    -Dgraalvm.locatorDisabled=true                                                      \
     @module-path.txt                                                                    \
-    -Xms8g -Xmx8g -XX:ReservedCodeCacheSize=256m                                        \
+    --add-modules org.graalvm.polyglot                                                  \
+    --enable-native-access=org.graalvm.truffle.runtime                                  \
     --enable-native-access=org.graalvm.truffle                                          \
-    --sun-misc-unsafe-memory-access=allow                                               \
     -cp ${EXPERIMENTATION_JAR_PATH}                                                     \
     com.jtortugo.proxies.TruffleObjectProxied
 

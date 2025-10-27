@@ -1,13 +1,15 @@
-function main(length) {
-    const left   = new Array(length).fill(0);
-    forof(left);
+function main(items) {
+	items[items.length-1].id = -100;
+	if (!forof(items)) {
+		console.log("Warning. Did not find element!");
+	}
 }
  
-function forof(array) {
-    for (let entry of array) {
-		if (entry == 1) {
+function forof(items) {
+    for (let entry of items) {
+		if (entry.id == -100) {
 			return true;
 		}
     }
-    return false;
+	return false;
 }

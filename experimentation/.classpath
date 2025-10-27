@@ -14,29 +14,24 @@
 	</classpathentry>
 	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
 		<attributes>
+			<attribute name="test" value="true"/>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="test" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry excluding="**" kind="src" output="target/test-classes" path="src/test/resources">
 		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
 			<attribute name="test" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
 			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17">
 		<attributes>
+			<attribute name="module" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="/com.oracle.truffle.api.interop"/>
 	<classpathentry kind="src" path=".apt_generated">
 		<attributes>
 			<attribute name="optional" value="true"/>
@@ -44,9 +39,269 @@
 	</classpathentry>
 	<classpathentry kind="src" output="target/test-classes" path=".apt_generated_tests">
 		<attributes>
-			<attribute name="optional" value="true"/>
 			<attribute name="test" value="true"/>
+			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="src" path="target/generated-sources/annotations">
+		<attributes>
+			<attribute name="ignore_optional_problems" value="true"/>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="m2e-apt" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/test-classes" path="target/generated-test-sources/test-annotations">
+		<attributes>
+			<attribute name="ignore_optional_problems" value="true"/>
+			<attribute name="test" value="true"/>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="m2e-apt" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="/com.oracle.truffle.api.interop"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CHROMEINSPECTOR"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CHROMEINSPECTOR_TEST"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/COLLECTIONS"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.graalvm.locator"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.js.parser"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.mxtool.checkcopy"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.mxtool.compilerserver"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.mxtool.jacoco"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.mxtool.jmh_1_21"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.mxtool.junit"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.mxtool.junit.jdk9"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.mxtool.webserver"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.svm.core.annotate"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.api"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.api.bytecode"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.api.bytecode.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.api.debug"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.api.debug.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.api.dsl"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.api.dsl.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.api.exception"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.api.impl.asm"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.api.instrumentation"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.api.instrumentation.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.api.jdk21"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.api.jdk9"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.api.library"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.api.library.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.api.modularized.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.api.modularized.test.separate.module.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.api.object"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.api.object.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.api.profiles"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.api.staticobject"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.api.staticobject.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.api.strings"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.api.strings.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.api.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.api.utilities"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.compiler"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.dsl.processor"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.host"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.js"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.js.annotations"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.js.codec"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.js.factory.processor"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.js.fuzzillilauncher"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.js.jmh"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.js.parser"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.js.runtime.doubleconv"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.js.scriptengine"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.js.scriptengine.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.js.shell"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.js.snapshot"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.js.stats"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.js.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.js.test.debug"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.js.test.external"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.js.test.fetch"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.js.test.instrumentation"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.js.test.sdk"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.js.test.threading"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.nfi"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.nfi.api"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.nfi.backend.libffi"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.nfi.backend.panama"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.nfi.backend.panama.jdk22"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.nfi.backend.spi"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.nfi.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.object"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.polyglot"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.regex"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.regex.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.regex.test.dummylang"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.runtime"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.sl"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.sl.launcher"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.sl.tck"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.sl.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.st"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.st.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.tck"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.tck.common"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.tck.instrumentation"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.tck.tests"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.tck.tests.language"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.tools.agentscript"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.tools.chromeinspector"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.tools.chromeinspector.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.tools.coverage"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.tools.coverage.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.tools.dap"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.tools.dap.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.tools.profiler"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.tools.profiler.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.tools.warmup"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.tools.warmup.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.trufflenode"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.oracle.truffle.trufflenode.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/DAP"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/DAP_TEST"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GRAAL"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GRAAL_COMPILER_MICRO_BENCHMARKS"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GRAAL_COMPILER_WHITEBOX_MICRO_BENCHMARKS"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GRAAL_IGVUTIL"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GRAAL_IGVUTIL_TEST"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GRAAL_MANAGEMENT"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GRAAL_PROCESSOR"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GRAAL_PROFDIFF"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GRAAL_PROFDIFF_TEST"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GRAAL_SDK"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GRAAL_TEST"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GRAALJS"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GRAALJS_FUZZILLI_LAUNCHER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GRAALJS_LAUNCHER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GRAALJS_SCRIPTENGINE"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GRAALJS_SCRIPTENGINE_TESTS"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/INSIGHT"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/INSIGHT_HEAP"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/INSIGHT_TEST"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jdk.graal.compiler"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jdk.graal.compiler.libgraal"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jdk.graal.compiler.libgraal.loader"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jdk.graal.compiler.management"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jdk.graal.compiler.microbenchmarks"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jdk.graal.compiler.processor"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jdk.graal.compiler.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/JLINE3"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/JNIUTILS"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/JS_DEBUG_TESTS"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/JS_INTEROP_MICRO_BENCHMARKS"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/JUNIT_TOOL"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/LAUNCHER_COMMON"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/LIBGRAAL"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/LIBGRAAL_LOADER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/LOCATOR"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/LSP"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/LSP_API"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/LSP_TEST"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/MAVEN_DOWNLOADER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/MX_JACOCO_REPORT"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/MX_MICRO_BENCHMARKS"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/NATIVEBRIDGE"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/NATIVEBRIDGE_BENCHMARK"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/NATIVEBRIDGE_PROCESSOR"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/NATIVEBRIDGE_PROCESSOR_TEST"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/NATIVEIMAGE"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/NATIVEIMAGE_LIBGRAAL"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.collections"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.collections.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.home"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.home.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.igvutil"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.igvutil.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.jniutils"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.launcher"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.launcher.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.maven.downloader"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.micro.benchmarks"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.nativebridge"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.nativebridge.benchmark"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.nativebridge.processor"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.nativebridge.processor.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.nativeimage"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.nativeimage.libgraal"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.nativeimage.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.options"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.polybench"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.polybench.instruments"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.polybench.micro"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.polyglot"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.polyglot.tck"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.profdiff"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.profdiff.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.resourcecopy"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.sdk"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.shadowed.com.ibm.icu"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.shadowed.org.antlr.v4.runtime"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.shadowed.org.jcodings"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.shadowed.org.jline"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.shadowed.org.jline.jdk22"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.shadowed.org.json"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.shadowed.org.tukaani.xz"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.tools.api.lsp"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.tools.insight"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.tools.insight.heap"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.tools.insight.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.tools.lsp"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.tools.lsp.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.truffle.benchmark"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.webimage.api"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.word"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.graalvm.word.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/PMH"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/POLYBENCH"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/POLYBENCH_INSTRUMENTS"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/POLYGLOT"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/POLYGLOT_TCK"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/RESOURCECOPY"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/SDK_JS_TESTS"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/SDK_TEST"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TREGEX"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TREGEX_TEST_DUMMY_LANG"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TREGEX_UNIT_TESTS"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_ANTLR4"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_API"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_COMPILER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_COVERAGE"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_COVERAGE_TEST"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_DSL_PROCESSOR"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_ICU4J"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_JCODINGS"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_JS_FACTORY_PROCESSOR"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_JS_SNAPSHOT_TOOL"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_JS_TESTS"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_JSON"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_MICRO_BENCHMARKS"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_MODULARIZED_TEST"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_MODULARIZED_TEST_SEPARATE_MODULE_TEST"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_NFI"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_NFI_LIBFFI"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_NFI_PANAMA"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_NFI_TEST"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_PROFILER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_PROFILER_TEST"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_RUNTIME"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_SL"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_SL_LAUNCHER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_SL_TCK"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_SL_TEST"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_ST"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_ST_TEST"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_STATS"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_TCK"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_TCK_COMMON"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_TCK_INSTRUMENTATION"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_TCK_TESTS"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_TCK_TESTS_LANGUAGE"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_TEST"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TRUFFLE_XZ"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/WEBIMAGE_PREVIEW"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/WORD"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -35,10 +35,10 @@ public class MapAccess_OneField_CustomProxy implements TruffleObject {
         }
     }
 
-    //@ExportMessage
-    //void writeMember(String member, Object value) throws UnsupportedMessageException {
-    //	write(member, value);
-    //}
+    @ExportMessage
+    void writeMember(String member, Object value) throws UnsupportedMessageException {
+    	write(member, value);
+    }
 
     public String[] getAnnotations() {
         return this.annotations;
@@ -49,10 +49,10 @@ public class MapAccess_OneField_CustomProxy implements TruffleObject {
     	return this.fields.get(member);
     }
     
-    //@TruffleBoundary(allowInlining = true)
-    //void write(String member, Object value) {
-    //	this.fields.put(member, value);
-    //}
+    @TruffleBoundary(allowInlining = true)
+    void write(String member, Object value) {
+    	this.fields.put(member, value);
+    }
     
     @ExportMessage final Object getMembers(boolean includeInternal) throws UnsupportedMessageException { return this.fields.keySet(); }
     @ExportMessage final boolean hasMembers() { return true; }

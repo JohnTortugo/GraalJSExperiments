@@ -2,6 +2,10 @@ package com.jtortugo.proxies;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.graalvm.polyglot.Value;
+//import org.graalvm.polyglot.proxy.ProxyDatapathObject;
+
+import com.jtortugo.ExperimentConfig;
 
 public class ProxyFieldAccess {
 	private static final ArrayList<ExperimentConfig> experimetConfigs = new ArrayList<>(List.of(
@@ -17,10 +21,11 @@ public class ProxyFieldAccess {
 //				}
 //            )
 //            """)
-//			.addProxyConfig("DirectAccess", 							i -> { return new DirectAccess_OneField(i);        		})
-//			.addProxyConfig("DirectAccess_SingleField_ProxyObject", 	i -> { return new DirectAccess_OneField_ProxyObject(i); })
-//			.addProxyConfig("MapAccess_SingleField_ProxyObject", 		i -> { return new MapAccess_OneField_ProxyObject(i); 	})
-//			.addProxyConfig("MapAccess_SingleField_CustomProxy", 		i -> { return new MapAccess_OneField_CustomProxy(i); 	}),
+//			.addProxyConfig("DirectAccess_OneField", 					i -> { return new DirectAccess_OneField(i);        		})
+//			.addProxyConfig("DirectAccess_OneField_ProxyObject", 		i -> { return new DirectAccess_OneField_ProxyObject(i); })
+//			.addProxyConfig("MapAccess_OneField_ProxyObject", 			i -> { return new MapAccess_OneField_ProxyObject(i); 	})
+//			.addProxyConfig("MapAccess_OneField_ProxyDatapathObject", 	i -> { return new MapAccess_OneField_ProxyDatapathObject(i); 	}),
+//			.addProxyConfig("MapAccess_OneField_CustomProxy", 			i -> { return new MapAccess_OneField_CustomProxy(i); 	}),
 //					
 //					
 //		new ExperimentConfig("ForLoop_Multiply_Add_Two_Read_Same_Field", 
@@ -39,25 +44,27 @@ public class ProxyFieldAccess {
 //			.addProxyConfig("DirectAccess_SingleField_ProxyObject", 	i -> { return new DirectAccess_OneField_ProxyObject(i); })
 //			.addProxyConfig("MapAccess_SingleField_ProxyObject", 		i -> { return new MapAccess_OneField_ProxyObject(i); 	})
 //			.addProxyConfig("MapAccess_SingleField_CustomProxy", 		i -> { return new MapAccess_OneField_CustomProxy(i); 	}),
-//			
-//		
-//		/************************************************************************************************************************/
-//		new ExperimentConfig("ForLoop_Multiply_Add_Four_Read_Fields", 
-//			"""
-//			(
-//        		function for_multiply_four_fields(order, length) {
-//        		    let result = 0;
-//        		    for (var i = 0; i < length; i++) {
-//						result += order.field1 * order.field2 * order.field3 * order.field4;
-//        			}
-//        			return result;
-//				}
-//            )
-//            """)
-//		    .addProxyConfig("DirectAccess", 							i -> { return new DirectAccess_FourFields(i, i+1, i+2, i+3);       			})
-//			.addProxyConfig("DirectAccess_FourFields_ProxyObject", 		i -> { return new DirectAccess_FourFields_ProxyObject(i, i+1, i+2, i+3);	})
-//			.addProxyConfig("MapAccess_FourFields_ProxyObject", 		i -> { return new MapAccess_FourFields_ProxyObject(i, i+1, i+2, i+3); 		})
-//			.addProxyConfig("MapAccess_FourFields_CustomProxy", 		i -> { return new MapAccess_FourFields_CustomProxy(i, i+1, i+2, i+3); 		}),
+			
+		
+		/************************************************************************************************************************/
+		new ExperimentConfig("ForLoop_Multiply_Add_Four_Read_Fields", 
+			"""
+			(
+        		function for_multiply_four_fields(order, length) {
+        		    let result = 0;
+        		    for (var i = 0; i < length; i++) {
+						result += order.field1 * order.field2 * order.field3 * order.field4;
+        			}
+        			return result;
+				}
+            )
+            """)
+//		    .addProxyConfig("DirectAccess", 							i -> { return new DirectAccess_FourFields(i, i+1, i+2, i+3);       				})
+//			.addProxyConfig("DirectAccess_FourFields_ProxyObject", 		i -> { return new DirectAccess_FourFields_ProxyObject(i, i+1, i+2, i+3);		})
+//			.addProxyConfig("MapAccess_FourFields_ProxyObject", 		i -> { return new MapAccess_FourFields_ProxyObject(i, i+1, i+2, i+3); 			})
+//			.addProxyConfig("MapAccess_FourFields_ProxyDatapathObject", i -> { return new MapAccess_FourFields_ProxyDatapathObject(i, i+1, i+2, i+3); 	})
+//			.addProxyConfig("MapAccess_FourFields_ProxyDatapathObject", i -> { ProxyDatapathObject dpProxy = new ProxyDatapathObject(); dpProxy.fields.put("field1", i); dpProxy.fields.put("field2", i+1); dpProxy.fields.put("field3", i+2); dpProxy.fields.put("field4", i+3);   return dpProxy; })
+//			.addProxyConfig("MapAccess_FourFields_CustomProxy", 		i -> { return new MapAccess_FourFields_CustomProxy(i, i+1, i+2, i+3); 			}),
 //			
 //			
 //		/************************************************************************************************************************/
@@ -155,14 +162,14 @@ public class ProxyFieldAccess {
 
 
 
-				new ExperimentConfig("return_unchanged_input", """
-                    (
-                        function read_after_read(input) {
-                            return input;
-                        }
-                    )
-                    """)
-			.addProxyConfig("MapAccess_SingleField_CustomProxy", MapAccess_OneField_CustomProxy::new)
+//				new ExperimentConfig("return_unchanged_input", """
+//                    (
+//                        function read_after_read(input) {
+//                            return input;
+//                        }
+//                    )
+//                    """)
+//			.addProxyConfig("MapAccess_SingleField_CustomProxy", MapAccess_OneField_CustomProxy::new)
 	));
 	
 	  
@@ -170,7 +177,8 @@ public class ProxyFieldAccess {
     	for (var expConfig : experimetConfigs) {
     		System.out.println("Source: " + expConfig.name);
     		for (var proxyConfig : expConfig.proxyConfigs) {    			
-    			BenchIt.benchIt(expConfig.name, expConfig.source, proxyConfig.name, proxyConfig.gen);
+    			double vlw = BenchIt.benchIt(expConfig.name, expConfig.source, proxyConfig.name, proxyConfig.gen);
+    			System.out.println("Result value: " + vlw);
     		}
     	}
     }

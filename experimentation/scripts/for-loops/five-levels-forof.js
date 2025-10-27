@@ -3,9 +3,9 @@ function main() {
 	const top2   = new Array(1, 2, 3);
 	const top3   = new Array(1, 2, 3);
 	
-    const left   =getRandomArray(); // new Array(300).fill(0);
-    const right  =getRandomArray(); // new Array(300).fill(1);
-    const noneof =getRandomArray(); // new Array(300).fill(2);
+    const left   = getRandomArray(); // new Array(300).fill(0);
+    const right  = getRandomArray(); // new Array(300).fill(1);
+    const noneof = getRandomArray(); // new Array(300).fill(2);
 
     return forof(top1, top2, top3, left, right, noneof);
 }

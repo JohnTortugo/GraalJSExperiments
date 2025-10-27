@@ -14,25 +14,13 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>17</maven.compiler.release>
-    <graaljs.version>24.1.0</graaljs.version>
-    <graalvm.version>24.1.0</graalvm.version>
+    <graaljs.version>26.0.0-SNAPSHOT</graaljs.version>
+    <graalvm.version>26.0.0-SNAPSHOT</graalvm.version>
   </properties>
 
 
 
   <dependencies>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <version>5.11.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-params</artifactId>
-      <version>5.11.0</version>
-      <scope>test</scope>
-    </dependency>
     <dependency>
         <groupId>org.graalvm.polyglot</groupId>
         <artifactId>polyglot</artifactId>
@@ -44,15 +32,15 @@
 	    <version>${graaljs.version}</version>
 	</dependency>
     <dependency>
-        <groupId>org.graalvm.polyglot</groupId>
-        <artifactId>js</artifactId>
+        <groupId>org.graalvm.js</groupId>
+        <artifactId>js-language</artifactId>
         <version>${graaljs.version}</version>
         <type>pom</type>
     </dependency>
     <dependency>
     	<groupId>org.graalvm.truffle</groupId>
     	<artifactId>truffle-api</artifactId>
-    	<version>24.1.0</version>
+    	<version>${graalvm.version}</version>
 	</dependency>
     <dependency>
       <groupId>org.graalvm.compiler</groupId>
@@ -60,11 +48,6 @@
       <version>${graalvm.version}</version>
       <scope>runtime</scope>
     </dependency>
-    <dependency>
-		<groupId>info.picocli</groupId>
-		<artifactId>picocli</artifactId>
-		<version>4.7.5</version>
-	</dependency>
   </dependencies>
 
   <build>
@@ -120,6 +103,8 @@
             <artifactId>maven-jar-plugin</artifactId>
             <version>3.4.2</version>
         </plugin>
+
+        <!--
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-dependency-plugin</artifactId>
@@ -138,6 +123,34 @@
                 </execution>
             </executions>
         </plugin>
+        -->
+
+    <!--
+        <plugin>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <version>3.6.0</version>
+            <configuration>
+                <descriptorRefs>
+                    <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
+                <archive>
+                    <manifest>
+                        <mainClass>com.jtortugo.proxies.TruffleObjectProxied</mainClass>
+                    </manifest>
+                </archive>
+            </configuration>
+            <executions>
+                <execution>
+                    <id>make-assembly</id>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>single</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+        -->
+
       </plugins>
   </build>
 </project>
