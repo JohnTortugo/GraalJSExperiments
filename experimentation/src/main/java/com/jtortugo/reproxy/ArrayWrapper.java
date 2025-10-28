@@ -1,24 +1,23 @@
 package com.jtortugo.reproxy;
 
-import com.jtortugo.reproxy.proton.Term;
-import com.jtortugo.reproxy.proton.Tuple;
-import com.jtortugo.reproxy.proton.TypeSchema;
-import com.jtortugo.reproxy.proton.Types;
-
 import org.apache.commons.lang3.math.NumberUtils;
 import org.graalvm.polyglot.Value;
 import org.graalvm.polyglot.proxy.ProxyArray;
+
+import com.jtortugo.reproxy.proton.Term;
+import com.jtortugo.reproxy.proton.Array;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ProtonReadOnlyTupleWrapper extends ContainerProxy implements ProxyArray {
-    private final Tuple tuple;
+public class ArrayWrapper implements ProxyArray {
+    private final Array tuple;
     private final Map<Long, Object> converted;
+	protected final TypeScriptIonInterop typeInterop;
 
-    public ProtonReadOnlyTupleWrapper(TypeScriptIonInterop typeInterop, Tuple tuple) {
-        super(typeInterop);
+    public ArrayWrapper(TypeScriptIonInterop typeInterop, Array tuple) {
+    	this.typeInterop = typeInterop;
         this.tuple = tuple;
         this.converted = new HashMap<>();
     }
@@ -29,10 +28,6 @@ public class ProtonReadOnlyTupleWrapper extends ContainerProxy implements ProxyA
             Term value = tuple.getElements()[i.intValue()];
             if (value == null) {
                 return typeInterop.newUndefined();
-            } else if (value.type() == Types.structure()) {
-                return typeInterop.protonToTypeScript(value, TypeSchema.ION_READONLYSTRUCT);
-            } else if (value.type() == Types.tuple()) {
-                return typeInterop.protonToTypeScript(value, TypeSchema.ION_READONLYLIST);
             } else {
                 return typeInterop.protonToTypeScript(value);
             }
@@ -58,7 +53,6 @@ public class ProtonReadOnlyTupleWrapper extends ContainerProxy implements ProxyA
         return this.tuple;
     }
 
-    @Override
     protected Object ionGetMember(String key) {
         long index =  Long.parseLong(key);
         long size = getSize();
@@ -70,22 +64,17 @@ public class ProtonReadOnlyTupleWrapper extends ContainerProxy implements ProxyA
         }
     }
 
-    @Override
     public Object getMemberKeys() {
-        // `enumerateOwnPropertyNamesForeign:188` actually enumerates the keys from the array automatically.
-        // This method is probably only used for member keys other than indices, which is none for tuples.
         return List.of();
     }
 
-    @Override
     public boolean hasMember(String key) {
         return switch (key) {
-            case GET_ANNOTATIONS_METHOD, GET_ION_TYPE_METHOD, ION_EQUALS_METHOD -> true;
+            case "getAnnotations", "getIonType", "ionEquals" -> true;
             default -> ionHasMember(key);
         };
     }
 
-    @Override
     protected boolean ionHasMember(String key) {
         try {
             if (!NumberUtils.isParsable(key)) {
@@ -103,17 +92,7 @@ public class ProtonReadOnlyTupleWrapper extends ContainerProxy implements ProxyA
         }
     }
 
-    protected String[] ionAnnotations() {
-        return tuple.annotations();
-    }
-
-    @Override
     public void putMember(String key, Value value) {
         throw new UnsupportedOperationException("ion.ReadOnlyList cannot be modified");
-    }
-
-    @Override
-    public String getIonType() {
-        return "IonList";
     }
 }

@@ -1,10 +1,21 @@
 package com.jtortugo.reproxy.proton;
 
-public abstract class Term {
+import java.util.Map;
 
-	public Object type() {
-		// TODO Auto-generated method stub
-		return null;
+public abstract class Term {
+	protected Map<String, Term> fields;
+	protected String[] annotations;
+	protected Type type;
+
+	public Map<String, Term> getFields() {
+		return this.fields;
 	}
 
+	public Term get(String field) {
+		return this.fields.get(field);
+	}
+
+	public String[] annotations() {
+		return this.annotations;
+	}
 }
