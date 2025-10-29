@@ -11,21 +11,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ArrayWrapper implements ProxyArray {
-    private final Array tuple;
+public class ArrayWrapperProxy implements ProxyArray {
+    private final Array array;
     private final Map<Long, Object> converted;
-	protected final TypeScriptIonInterop typeInterop;
+	protected final TypeScriptInterop typeInterop;
 
-    public ArrayWrapper(TypeScriptIonInterop typeInterop, Array tuple) {
+    public ArrayWrapperProxy(TypeScriptInterop typeInterop, Array array) {
     	this.typeInterop = typeInterop;
-        this.tuple = tuple;
+        this.array = array;
         this.converted = new HashMap<>();
     }
 
     @Override
     public Object get(long index) {
         return converted.computeIfAbsent(index, i -> {
-            Term value = tuple.getElements()[i.intValue()];
+            Term value = array.getElements()[i.intValue()];
             if (value == null) {
                 return typeInterop.newUndefined();
             } else {
@@ -36,21 +36,21 @@ public class ArrayWrapper implements ProxyArray {
 
     @Override
     public void set(long index, Value value) {
-        throw new UnsupportedOperationException("ion.ReadOnlyList cannot be modified");
+        throw new UnsupportedOperationException("cannot be modified");
     }
 
     @Override
     public boolean remove(long index) {
-        throw new UnsupportedOperationException("ion.ReadOnlyList cannot be modified");
+        throw new UnsupportedOperationException("cannot be modified");
     }
 
     @Override
     public long getSize() {
-        return tuple.getElements().length;
+        return array.size();
     }
 
     public Term getTerm() {
-        return this.tuple;
+        return this.array;
     }
 
     protected Object ionGetMember(String key) {
@@ -70,7 +70,7 @@ public class ArrayWrapper implements ProxyArray {
 
     public boolean hasMember(String key) {
         return switch (key) {
-            case "getAnnotations", "getIonType", "ionEquals" -> true;
+            case "getIonType", "ionEquals" -> true;
             default -> ionHasMember(key);
         };
     }

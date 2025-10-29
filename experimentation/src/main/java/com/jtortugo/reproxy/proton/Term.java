@@ -4,8 +4,6 @@ import java.util.Map;
 
 public abstract class Term {
 	protected Map<String, Term> fields;
-	protected String[] annotations;
-	protected Type type;
 
 	public Map<String, Term> getFields() {
 		return this.fields;
@@ -15,7 +13,7 @@ public abstract class Term {
 		return this.fields.get(field);
 	}
 
-	public String[] annotations() {
-		return this.annotations;
+	public void put(String field, Term value) {
+		this.fields.put(field, value);
 	}
 }

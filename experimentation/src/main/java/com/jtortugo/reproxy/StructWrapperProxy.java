@@ -9,27 +9,20 @@ import org.graalvm.polyglot.Value;
 import org.graalvm.polyglot.proxy.ProxyExecutable;
 import org.graalvm.polyglot.proxy.ProxyObject;
 
-import com.jtortugo.reproxy.proton.Structure;
+import com.jtortugo.reproxy.proton.Struct;
 import com.jtortugo.reproxy.proton.Term;
 
-import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.NonNull;
 
-public class StructWrapper implements ProxyObject {
-	@Getter(AccessLevel.PROTECTED)
-	private Value newAnnotations;
-
-	protected static final String GET_ANNOTATIONS_METHOD = "getAnnotations";
-	protected static final String SET_ANNOTATIONS_METHOD = "setAnnotations";
+public class StructWrapperProxy implements ProxyObject {
 	protected static final String GET_ION_TYPE_METHOD = "getIonType";
 	protected static final String ION_EQUALS_METHOD = "ionEquals";
 
-	protected final TypeScriptIonInterop typeInterop;
-	private final Structure protonStruct;
+	protected final TypeScriptInterop typeInterop;
+	private final Struct protonStruct;
 	private final Map<String, Object> converted;
 
-	public StructWrapper(@NonNull TypeScriptIonInterop typeInterop, @NonNull Structure struct) {
+	public StructWrapperProxy(@NonNull TypeScriptInterop typeInterop, @NonNull Struct struct) {
 		this.typeInterop = typeInterop;
 		this.protonStruct = struct;
 		this.converted = new HashMap<>();
@@ -79,17 +72,13 @@ public class StructWrapper implements ProxyObject {
 	@Override
 	public boolean hasMember(String key) {
 		return switch (key) {
-		case GET_ANNOTATIONS_METHOD, GET_ION_TYPE_METHOD, ION_EQUALS_METHOD -> true;
+		case GET_ION_TYPE_METHOD, ION_EQUALS_METHOD -> true;
 		default -> ionHasMember(key);
 		};
 	}
 
 	protected boolean ionHasMember(String key) {
 		return protonStruct.getFields().containsKey(key) || key.equals("get") || key.equals("toJSON");
-	}
-
-	protected String[] ionAnnotations() {
-		return protonStruct.annotations();
 	}
 
 	@Override

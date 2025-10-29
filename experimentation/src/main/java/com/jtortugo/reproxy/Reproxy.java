@@ -22,10 +22,8 @@ public class Reproxy {
 			System.exit(1);
 		}
 
-        // Path to your JSON file
         File file = new File(args[0]);
 
-        // Configure mapper
         ObjectMapper mapper = JsonMapper.builder()
                 .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
                 .build();

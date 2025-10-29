@@ -7,7 +7,7 @@ import com.jtortugo.reproxy.proton.Array;
 import com.jtortugo.reproxy.proton.Bool;
 import com.jtortugo.reproxy.proton.Integral;
 import com.jtortugo.reproxy.proton.Rational;
-import com.jtortugo.reproxy.proton.Structure;
+import com.jtortugo.reproxy.proton.Struct;
 import com.jtortugo.reproxy.proton.Term;
 import com.jtortugo.reproxy.proton.Textual;
 
@@ -16,13 +16,13 @@ import lombok.NonNull;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Context;
 
-public class TypeScriptIonInterop {
+public class TypeScriptInterop {
 	private static final String UNDEFINED = "undefined";
 
 	private final Context context;
 	private final Value undefined;
 
-	public TypeScriptIonInterop(Context context, String viewName) {
+	public TypeScriptInterop(Context context, String viewName) {
 		Source undef = Source.newBuilder("js", UNDEFINED, "undefined.js").buildLiteral();
 		this.undefined = context.eval(undef);
 		this.context = context;
@@ -33,10 +33,10 @@ public class TypeScriptIonInterop {
 	}
 
 	public Object protonToTypeScript(Term term) {
-		if (term instanceof Structure) {
-			return new StructWrapper(this, (Structure) term);
+		if (term instanceof Struct) {
+			return new StructWrapperProxy(this, (Struct) term);
 		} else if (term instanceof Array) {
-			return new ArrayWrapper(this, (Array) term);
+			return new ArrayWrapperProxy(this, (Array) term);
 		} else if (term instanceof Bool bl) {
 			return bl.getValue();
 		} else if (term instanceof Integral intg) {
@@ -71,10 +71,10 @@ public class TypeScriptIonInterop {
 
 		if (isProxy) {
 			Proxy termProxy = v.asProxyObject();
-			if (termProxy instanceof StructWrapper) {
-				return ((StructWrapper) termProxy).getTerm();
-			} else if (termProxy instanceof ArrayWrapper) {
-				return ((ArrayWrapper) termProxy).getTerm();
+			if (termProxy instanceof StructWrapperProxy) {
+				return ((StructWrapperProxy) termProxy).getTerm();
+			} else if (termProxy instanceof ArrayWrapperProxy) {
+				return ((ArrayWrapperProxy) termProxy).getTerm();
 			} else {
 				throw new IllegalArgumentException("Illegal cast of value " + v + " in view ");
 			}

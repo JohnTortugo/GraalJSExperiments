@@ -3,9 +3,7 @@ package com.jtortugo.reproxy.proton;
 public class Array extends Term {
     private final Term[] elements;
 
-	public Array(final Term[] elements, final String...annotations) {
-		this.annotations = annotations;
-		this.type = Type.ARRAY;
+	public Array(final Term[] elements) {
 		this.elements = elements;
 	}
 	
