@@ -11,3 +11,5 @@ graal-ws
 dumps/
 graal_dumps
 debug.log
+/.metadata/
+DatapathTypeScript/

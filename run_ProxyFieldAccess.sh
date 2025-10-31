@@ -1,38 +1,33 @@
 #!/bin/bash
 
-JAVA_PATH="/Users/dcsl/wf/graal-master/graal/sdk/latest_graalvm_home/bin/"
+JAVAHOME="/Users/dcsl/wf/graal-master/graal/sdk/latest_graalvm_home/"
 EXPERIMENTATION_JAR_PATH="/Users/dcsl/wf/GraalJSExperiments/experimentation/target/experimentation-1.0-SNAPSHOT.jar"
 
-#-Djdk.graal.MethodFilter=*for_multiply_add*
-IGV_DEBUG="-Djdk.graal.Dump=:3 -Djdk.graal.MethodFilter=*for_multiply* -Djdk.graal.PrintGraph=Network"
-JVM_DEBUG="-XX:CompileCommand=print,*::*profiledPERoot*"
-JAVA_DEBUG="-agentlib:jdwp=transport=dt_socket,server=y,address=8000,suspend=y"
+[[ $2 == *I* ]] && IGV="-Djdk.graal.Dump=:3 -Djdk.graal.MethodFilter=for_multiply_add -Djdk.graal.PrintGraph=Network"
+[[ $2 == *D* ]] && DEBUG="-agentlib:jdwp=transport=dt_socket,server=y,address=8000,suspend=y"
+[[ $2 == *P* ]] && PROF="-agentpath:/Users/dcsl/wf/tools/async-profiler-4.1-macos/lib/libasyncProfiler.dylib=start,event=cpu,cstack=vm,ann,file=profile.html"
 
 # Some clean up
 rm -rf *.log
 
 # Build the package
 pushd experimentation/
-#mvn clean package
+mvn clean package
 popd
 
-# Run it
-${JAVA_PATH}/java                                                                       \
-    -XX:+UnlockExperimentalVMOptions                                                    \
-    -XX:+UnlockDiagnosticVMOptions                                                      \
-    -server                                                                             \
-    -ea -esa \
-    -XX:+EnableJVMCI                                                                    \
-    -XX:-TraceDeoptimization                                                                    \
-    ${JVM_DEBUG_}                                                                       \
-    ${JAVA_DEBUG_}                                                                      \
-    ${IGV_DEBUG}                                                                        \
-    --add-exports=java.base/jdk.internal.misc=jdk.graal.compiler                        \
-    -Dgraalvm.locatorDisabled=true                                                      \
-    @locally-built-graal-jars.txt                                                                    \
-    -Xms8g -Xmx8g -XX:ReservedCodeCacheSize=256m                                        \
-    --enable-native-access=org.graalvm.truffle                                          \
-    --sun-misc-unsafe-memory-access=allow                                               \
-    -cp ${EXPERIMENTATION_JAR_PATH}                                                     \
-    com.jtortugo.proxies.ProxyFieldAccess
-
+${JAVAHOME}/bin/java                                                                        \
+    -server                                                                                 \
+    -XX:+UnlockExperimentalVMOptions                                                        \
+    -XX:+UnlockDiagnosticVMOptions -XX:+DebugNonSafepoints                                  \
+    -XX:+PreserveFramePointer                                                               \
+    -XX:+EnableJVMCI                                                                        \
+    ${DEBUG}                                                                               \
+    ${IGV}                                                                                 \
+    ${PROF}                                                                                \
+    @locally-built-graal-jars.txt                                                           \
+    --add-modules org.graalvm.shadowed.icu4j                                                \
+    --enable-native-access=org.graalvm.truffle                                              \
+    -Xms2g -Xmx2g -Xss24m                                                                   \
+    --sun-misc-unsafe-memory-access=allow                                                   \
+    -cp ~/wf/GraalJSExperiments/experimentation/target/experimentation-1.0-SNAPSHOT.jar     \
+    com.jtortugo.proxies.ProxyFieldAccess $1

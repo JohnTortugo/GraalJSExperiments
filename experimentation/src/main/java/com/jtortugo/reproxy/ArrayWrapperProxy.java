@@ -1,6 +1,5 @@
 package com.jtortugo.reproxy;
 
-import org.apache.commons.lang3.math.NumberUtils;
 import org.graalvm.polyglot.Value;
 import org.graalvm.polyglot.proxy.ProxyArray;
 
@@ -8,7 +7,6 @@ import com.jtortugo.reproxy.proton.Term;
 import com.jtortugo.reproxy.proton.Array;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ArrayWrapperProxy implements ProxyArray {
@@ -26,11 +24,7 @@ public class ArrayWrapperProxy implements ProxyArray {
     public Object get(long index) {
         return converted.computeIfAbsent(index, i -> {
             Term value = array.getElements()[i.intValue()];
-            if (value == null) {
-                return typeInterop.newUndefined();
-            } else {
-                return typeInterop.protonToTypeScript(value);
-            }
+			return typeInterop.protonToTypeScript(value);
         });
     }
 
@@ -51,48 +45,5 @@ public class ArrayWrapperProxy implements ProxyArray {
 
     public Term getTerm() {
         return this.array;
-    }
-
-    protected Object ionGetMember(String key) {
-        long index =  Long.parseLong(key);
-        long size = getSize();
-        // ProxyArray returns undefined if index >= size
-        if (index >= size) {
-            return null;
-        } else {
-            return get(index);
-        }
-    }
-
-    public Object getMemberKeys() {
-        return List.of();
-    }
-
-    public boolean hasMember(String key) {
-        return switch (key) {
-            case "getIonType", "ionEquals" -> true;
-            default -> ionHasMember(key);
-        };
-    }
-
-    protected boolean ionHasMember(String key) {
-        try {
-            if (!NumberUtils.isParsable(key)) {
-                return false;
-            }
-            long index = Long.parseLong(key);
-            long size = getSize();
-            // ProxyArray returns undefined if index >= size
-            if (index >= size) {
-                return false;
-            }
-            return true;
-        } catch (NumberFormatException nfe) {
-            return false;
-        }
-    }
-
-    public void putMember(String key, Value value) {
-        throw new UnsupportedOperationException("ion.ReadOnlyList cannot be modified");
     }
 }
