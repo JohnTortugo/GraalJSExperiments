@@ -32,7 +32,7 @@ public class TruffleObjectProxied {
 		if (i % 2 == 0) {
 			return i;
 		} else {
-			return new MapAccess_OneField_CustomProxy(i);
+			return new Map_TruffleObject(i);
 		}
 	}
 
@@ -79,7 +79,7 @@ public class TruffleObjectProxied {
 			var jsFunction = jsBindings.getMember("foobar");
 
 			//Object tsObj = new ProtonBooleanProxy();
-			Object tsObj = new MapAccess_OneField_ProxyObject(2025);
+			Object tsObj = new Map_ProxyObject(2025);
 			Value result = jsFunction.execute(tsObj);
 
 
@@ -88,7 +88,7 @@ public class TruffleObjectProxied {
 			System.out.println("result.isMetaObject(): " + result.isMetaObject());
 
 			//ProtonBooleanProxy res2 = result.as(ProtonBooleanProxy.class);
-			MapAccess_OneField_ProxyObject res2 = result.asProxyObject();
+			Map_ProxyObject res2 = result.asProxyObject();
 			System.out.println("This is res2: " + res2);
 			System.out.println("This is field1: " + res2.getMember("field1"));
 			System.out.println("Context: " + context.getClass().getSimpleName());

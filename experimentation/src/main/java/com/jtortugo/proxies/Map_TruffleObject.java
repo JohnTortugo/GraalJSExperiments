@@ -12,36 +12,24 @@ import com.oracle.truffle.api.library.ExportLibrary;
 import com.oracle.truffle.api.library.ExportMessage;
 
 @ExportLibrary(InteropLibrary.class)
-public class MapAccess_OneField_CustomProxy implements TruffleObject {
-    private final String term;
-    private final String[] annotations;
+public class Map_TruffleObject implements TruffleObject {
     private final Map<String, Object> fields;
 
-    public MapAccess_OneField_CustomProxy(int field1) {
-    	this.fields = new HashMap<>(4); 
-    	this.fields.put("field1", field1);
-        this.term = "CesarTerms";
-        this.annotations = new String[] { "Annot1", "Annot2", "Annot3" };
+    public Map_TruffleObject(Object...values) {
+    	this.fields = new HashMap<String, Object>(); 
+    	for (int i=0; i<values.length; i++) {
+			this.fields.put("field"+(i+1), values[i]);
+    	}
 	}
     
     @ExportMessage
     Object readMember(String member) throws UnsupportedMessageException, UnknownIdentifierException {
-        if (member.equals("term")) {
-            return this.term;
-        } else if (member.equals("annotations")) {
-            return this.annotations;
-        } else {
-            return read(member);
-        }
+		return read(member);
     }
 
     @ExportMessage
     void writeMember(String member, Object value) throws UnsupportedMessageException {
     	write(member, value);
-    }
-
-    public String[] getAnnotations() {
-        return this.annotations;
     }
 
     @TruffleBoundary(allowInlining = true)

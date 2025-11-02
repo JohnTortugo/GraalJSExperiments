@@ -7,6 +7,7 @@ import org.graalvm.polyglot.Engine;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
 import com.oracle.truffle.api.interop.TruffleObject;
+import com.oracle.truffle.host.DatapathProxy;
 
 public class BenchIt {
     public static void computeStats(String label, long[] data, int sampleSize) {
@@ -34,14 +35,12 @@ public class BenchIt {
         double confidenceLow = average - zScore * standardError;
         double confidenceHigh = average + zScore * standardError;
 
-        System.out.printf("\t%s %n", label);
-        System.out.printf("\t\tAverage...........................: %.2f us%n", average);
-        System.out.printf("\t\tStandard Deviation................: %.2f us%n", standardDeviation);
-        System.out.printf("\t\t95%% Confidence Interval...........: [%.2f, %.2f] us%n", confidenceLow, confidenceHigh);
+        System.out.printf("\t%25s \t\tAvgerage: %4.2f us \t\tStDev: %4.2f us  \t\t95%% ConfInt: [%4.2f, %4.2f] us %n", 
+        		label, average, standardDeviation, confidenceLow, confidenceHigh);
     }
     
 	public static double benchIt(String expName, String jsSource, String proxyConfigName, Function<Integer, Object> gen) {
-        final int BENCH_ITERATIONS = 10000;
+        final int BENCH_ITERATIONS = 100000;
     	long[] times = new long[BENCH_ITERATIONS];
     	double[] results = new double[BENCH_ITERATIONS];
 
@@ -50,9 +49,9 @@ public class BenchIt {
                 .option("engine.DynamicCompilationThresholds", "false")
                 .option("engine.BackgroundCompilation",        "false")
                 .option("engine.OSR", 						   "false")
-                .option("engine.TraceCompilationDetails",      "true")
-                .option("engine.TraceTransferToInterpreter",      "true")
-                .option("engine.TraceAssumptions",      "true")
+                .option("engine.TraceCompilationDetails",      "false")
+                .option("engine.TraceTransferToInterpreter",   "false")
+                .option("engine.TraceAssumptions",      	   "false")
                 .build();
 
         var source = Source.newBuilder("js", jsSource, expName + "_" + proxyConfigName + ".js").buildLiteral();
@@ -65,7 +64,11 @@ public class BenchIt {
                 var start = System.nanoTime();
                 Value vlw = function.execute(order, 10_000);
 				times[i] = (System.nanoTime() - start) / 1_000;
-				results[i] = vlw.asDouble();
+				if (vlw.isDatapathProxyObject()) {
+					DatapathProxy tfl = vlw.asDatapathProxyObject();
+					//System.out.println("InteropLibrary!! " + tfl.read("field1"));
+				}
+				//results[i] = vlw.asDouble();
             }
         } catch (Exception e) {
             e.printStackTrace();

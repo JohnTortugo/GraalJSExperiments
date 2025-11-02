@@ -14,8 +14,8 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>17</maven.compiler.release>
-    <graaljs.version>26.0.0-SNAPSHOT</graaljs.version>
-    <graalvm.version>26.0.0-SNAPSHOT</graalvm.version>
+    <graaljs.version>25.1.0-SNAPSHOT</graaljs.version>
+    <graalvm.version>25.1.0-SNAPSHOT</graalvm.version>
   </properties>
 
 
